@@ -1,5 +1,6 @@
 import os
 import sys
+import base64
 import logging
 import socket
 import signal
@@ -9,13 +10,14 @@ from tornado import ioloop, options, web
 IMG_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/image")
 INST_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/instance")
 LABEL_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/label")
-
+STATIC_IMG_FOLDER = os.path.join(os.path.dirname(__file__), "img")
 
 class UploadHandler(web.RequestHandler):
     def post(self, name=None):
-        # TODO
         self.application.logger.info("Recieved a file")
-        # color_fname = "color.png"
+        color_fname = "color.png"
+        img_data = base64.b64decode(str(self.request.body).split(",")[1])
+        output_color_file = STATIC_IMG_FOLDER + "/" + color_fname
 
         self.write({
             "result": "success",
