@@ -11,6 +11,11 @@ INST_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/instance")
 LABEL_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/label")
 
 
+class MainHandler(web.RequestHandler):
+    def get(self, name=None):
+        self.render("index.html")
+
+
 class MainApplication(web.Application):
     is_closing = False
 
@@ -30,6 +35,10 @@ class MainApplication(web.Application):
         self.address = settings.get('address', "0.0.0.0")
         self.ioloop = ioloop.IOLoop.instance()
         self.logger = logging.getLogger()
+
+        self.add_handlers(".*", [
+            (r"/", MainHandler),
+        ])
 
     def run(self):
         try:
