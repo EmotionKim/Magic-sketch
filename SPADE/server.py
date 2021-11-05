@@ -11,6 +11,18 @@ INST_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/instance")
 LABEL_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/label")
 
 
+class UploadHandler(web.RequestHandler):
+    def post(self, name=None):
+        # TODO
+        self.application.logger.info("Recieved a file")
+        # color_fname = "color.png"
+
+        self.write({
+            "result": "success",
+            "location": "image_location"
+        })
+
+
 class MainHandler(web.RequestHandler):
     def get(self, name=None):
         self.render("index.html")
@@ -38,6 +50,7 @@ class MainApplication(web.Application):
 
         self.add_handlers(".*", [
             (r"/", MainHandler),
+            (r"/upload", UploadHandler),
         ])
 
     def run(self):
