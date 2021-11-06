@@ -12,6 +12,15 @@ INST_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/instance")
 LABEL_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/label")
 STATIC_IMG_FOLDER = os.path.join(os.path.dirname(__file__), "img")
 
+
+def parse_static_filepath(filepath):
+    pass
+
+
+def make_processable(greyscale_fname, output_color_file):
+    pass
+
+
 class UploadHandler(web.RequestHandler):
     def post(self, name=None):
         self.application.logger.info("Recieved a file")
@@ -23,6 +32,10 @@ class UploadHandler(web.RequestHandler):
             out_f.write(img_data)
 
         greyscale_fname = "greyscale.png"
+        make_processable(greyscale_fname, output_color_file)
+
+        # TODO
+        static_image_location = parse_static_filepath("export_image_location")
 
         self.write({
             "result": "success",
