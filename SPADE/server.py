@@ -22,7 +22,9 @@ def parse_static_filepath(filepath):
 
 
 def make_processable(greyscale_fname, output_color_file):
-    pass
+    ouptut_greyscale_file = INST_FOLDER + "/" + greyscale_fname
+
+    print(output_color_file, ouptut_greyscale_file)
 
 
 class UploadHandler(web.RequestHandler):
