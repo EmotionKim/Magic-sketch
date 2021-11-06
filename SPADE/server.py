@@ -19,6 +19,11 @@ class UploadHandler(web.RequestHandler):
         img_data = base64.b64decode(str(self.request.body).split(",")[1])
         output_color_file = STATIC_IMG_FOLDER + "/" + color_fname
 
+        with open(output_color_file, "wb+") as out_f:
+            out_f.write(img_data)
+
+        greyscale_fname = "greyscale.png"
+
         self.write({
             "result": "success",
             "location": "image_location"
