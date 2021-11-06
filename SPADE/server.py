@@ -14,7 +14,11 @@ STATIC_IMG_FOLDER = os.path.join(os.path.dirname(__file__), "img")
 
 
 def parse_static_filepath(filepath):
-    pass
+    split_filepath = filepath.split('/')
+    while len(split_filepath) > 2:
+        split_filepath.pop(0)
+
+    return '/'.join(split_filepath)
 
 
 def make_processable(greyscale_fname, output_color_file):
