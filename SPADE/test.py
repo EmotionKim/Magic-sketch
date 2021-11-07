@@ -5,6 +5,7 @@ Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses
 
 import importlib
 
+from data.base_dataset import BaseDataset
 from models.pix2pix_model import Pix2PixModel
 from options.test_options import TestOptions
 
@@ -20,7 +21,10 @@ def run(verbose=False):
     dataset = None
     target_dataset_name = dataset_name.replace('_', '') + 'dataset'
 
-    # TODO: dataset 이름 정렬
+    for name, cls in datasetlib.__dict__.items():
+        if name.lower() == target_dataset_name.lower() \
+                and issubclass(cls, BaseDataset):
+            dataset = cls
 
     model = Pix2PixModel(opt, verbose)
     model.eval()
