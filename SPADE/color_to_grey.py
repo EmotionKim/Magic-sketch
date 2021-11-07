@@ -31,4 +31,5 @@ def convert_rgb_image_to_greyscale(input_file, output_file):
                 label = rgb_to_label[pixels[i, j][0:3]]
                 grey = label_to_grey[label]
             p_o[i, j] = grey
-    # TODO: 파일 저장
+
+    out_img.save(output_file)
