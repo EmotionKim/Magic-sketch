@@ -3,6 +3,7 @@ Copyright (C) 2019 NVIDIA Corporation.  All rights reserved.
 Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
 """
 
+import torch
 import importlib
 
 from data.base_dataset import BaseDataset
@@ -25,6 +26,20 @@ def run(verbose=False):
         if name.lower() == target_dataset_name.lower() \
                 and issubclass(cls, BaseDataset):
             dataset = cls
+
+    instance = dataset()
+    instance.initialize(opt)
+    if verbose:
+        print("dataset [%s] of size %d was created" %
+              (type(instance).__name__, len(instance)))
+
+    dataloader = torch.utils.data.DataLoader(
+        instance,
+        batch_size=opt.batchSize,
+        shuffle=not opt.serial_batches,
+        num_workers=int(opt.nThreads),
+        drop_last=opt.isTrain
+    )
 
     model = Pix2PixModel(opt, verbose)
     model.eval()
