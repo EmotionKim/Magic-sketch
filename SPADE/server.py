@@ -23,8 +23,12 @@ def parse_static_filepath(filepath):
 
 def make_processable(greyscale_fname, output_color_file):
     ouptut_greyscale_file = INST_FOLDER + "/" + greyscale_fname
-
     print(output_color_file, ouptut_greyscale_file)
+
+    color_to_grey.convert_rgb_image_to_greyscale(
+        output_color_file,
+        ouptut_greyscale_file
+    )
 
 
 class UploadHandler(web.RequestHandler):
