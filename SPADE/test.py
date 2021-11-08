@@ -9,6 +9,7 @@ import importlib
 from data.base_dataset import BaseDataset
 from models.pix2pix_model import Pix2PixModel
 from options.test_options import TestOptions
+from util.visualizer import Visualizer
 
 
 def run(verbose=False):
@@ -30,8 +31,7 @@ def run(verbose=False):
     instance = dataset()
     instance.initialize(opt)
     if verbose:
-        print("dataset [%s] of size %d was created" %
-              (type(instance).__name__, len(instance)))
+        print("dataset [%s] of size %d was created" % (type(instance).__name__, len(instance)))
 
     dataloader = torch.utils.data.DataLoader(
         instance,
@@ -40,16 +40,15 @@ def run(verbose=False):
         num_workers=int(opt.nThreads),
         drop_last=opt.isTrain
     )
-
     model = Pix2PixModel(opt, verbose)
     model.eval()
-
+    visualizer = Visualizer(opt)
+    
     if verbose:
         print(dataloader)
     for i, data_i in enumerate(dataloader):
         if i * opt.batchSize >= opt.how_many:
             break
-        model(data_i, mode='inference', verbose=verbose)
 
 
 if __name__ == "__main__":
