@@ -3,6 +3,7 @@ Copyright (C) 2019 NVIDIA Corporation.  All rights reserved.
 Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
 """
 
+import os
 import torch
 import importlib
 
@@ -31,7 +32,8 @@ def run(verbose=False):
     instance = dataset()
     instance.initialize(opt)
     if verbose:
-        print("dataset [%s] of size %d was created" % (type(instance).__name__, len(instance)))
+        print("dataset [%s] of size %d was created" %
+          (type(instance).__name__, len(instance)))
 
     dataloader = torch.utils.data.DataLoader(
         instance,
@@ -43,12 +45,20 @@ def run(verbose=False):
     model = Pix2PixModel(opt, verbose)
     model.eval()
     visualizer = Visualizer(opt)
-    
     if verbose:
         print(dataloader)
     for i, data_i in enumerate(dataloader):
+
         if i * opt.batchSize >= opt.how_many:
             break
+
+        generated = model(data_i, mode='inference', verbose=verbose)
+        for b in range(generated.shape[0]):
+            image_dir = os.path.join(
+                os.path.dirname(__file__),
+                "img"
+            )
+            return visualizer.save_images(generated[b], image_dir, verbose=verbose)
 
 
 if __name__ == "__main__":
