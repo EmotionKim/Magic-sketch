@@ -4,6 +4,7 @@ import base64
 import logging
 import socket
 import signal
+import subprocess
 
 from tornado import ioloop, options, web
 
@@ -21,6 +22,11 @@ def parse_static_filepath(filepath):
     return '/'.join(split_filepath)
 
 
+def copy_file(old, new):
+    command_string = "cp " + old + " " + new
+    subprocess.check_output(command_string.split(" "))
+
+
 def make_processable(greyscale_fname, output_color_file):
     ouptut_greyscale_file = INST_FOLDER + "/" + greyscale_fname
     print(output_color_file, ouptut_greyscale_file)
@@ -29,6 +35,9 @@ def make_processable(greyscale_fname, output_color_file):
         output_color_file,
         ouptut_greyscale_file
     )
+
+    copy_file(ouptut_greyscale_file, LABEL_FOLDER + "/" + greyscale_fname)
+    copy_file(ouptut_greyscale_file, IMG_FOLDER + "/" + greyscale_fname)
 
 
 class UploadHandler(web.RequestHandler):
