@@ -8,8 +8,8 @@ import subprocess
 
 from tornado import ioloop, options, web
 
-IMG_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/image")
-INST_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/instance")
+import color_to_grey
+import test
 LABEL_FOLDER = os.path.join(os.path.dirname(__file__), "dataset/label")
 STATIC_IMG_FOLDER = os.path.join(os.path.dirname(__file__), "img")
 
@@ -53,8 +53,10 @@ class UploadHandler(web.RequestHandler):
         greyscale_fname = "greyscale.png"
         make_processable(greyscale_fname, output_color_file)
 
-        # TODO
-        static_image_location = parse_static_filepath("export_image_location")
+        export_image_location = test.run(greyscale_fname)
+        print(export_image_location)
+        static_image_location = parse_static_filepath(export_image_location)
+        print(static_image_location)
 
         self.write({
             "result": "success",
