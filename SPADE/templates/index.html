@@ -6,51 +6,156 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Magic Sketch</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap core CSS -->
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link href="static/style.css" rel="stylesheet" />
+    <link href="static/color-picker.css" rel="stylesheet" />
   </head>
-  <link href="static/drawingboard.min.css" rel="stylesheet" />
+  <link href="static/drawingboard.css" rel="stylesheet" />
 
   <script
     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"
   ></script>
-  <script src="static/drawingboard.min.js" type="text/javascript"></script>
+  <script src="static/drawingboard.js" type="text/javascript"></script>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark static-top dark-background">
-      <div class="container">
-        <a class="navbar-brand rubik branding" href="#">Magic Sketch</a>
+    <!-- Navigation -->
+
+    <style>
+      #zbeubeu {
+        width: 600px;
+        height: 500px;
+      }
+    </style>
+
+    <nav class="navbar navbar-expand-lg static-top">
+      <div class="container" style="border-bottom: 3px solid #9372ce; text-align: center;">
+        <a class="navbar-brand rubik branding" href="#" style="color:#9372ce; font-weight:bold" >Magic Sketch </a>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item" style="cursor: pointer;">
+              <a
+                class="nav-link rubik"
+                data-toggle="modal"
+                data-target="#GuideModal"
+                style="font-weight:bold"
+                >Guide</a
+              >
+            </li>
+            <li class="nav-item" style="cursor: pointer;">
+              <a
+                class="nav-link rubik"
+                data-toggle="modal"
+                data-target="#ContactModal"
+                style="font-weight:bold"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
 
     <!-- Page Content -->
     <div class="content">
       <div class="container">
+        <div class="row">
+          <div class="col" id="container_col"><div id="zbeubeu"></div></div> <!-- 그림그리기 캔버스 위치 -->
+          <div class="col-1" style="margin: auto; min-width: 125px">
+            <a id="uploadimage" class="btn"><input type="image" src="./static/icons/magic.png" width="100%" height="100%" style="padding-right: 5px"/></a> <!-- 변환 버튼 위치 -->
+            <br>
+            <span>Magic Start!</span>
+          </div>
+          <div class="col" height="500px" width="100%">
+            <img class="image" src="#" onerror="this.src='static/icons/result.png'" height="100%" width="100%" id="image" /> <!-- 결과 이미지 위치 -->
+          </div>
+        </div>
+        <div id="sidebar" class="sidebar">
+          <div class="colorButtons">
+            <!-- <h4 class="rubik">Pen Color</h4> -->
+            <input class="color-picker cp-sm" id="colorpicker" />
+            <!-- 아이콘 버튼 위치 -->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div> -->
+<!--page content-->
+        <p class="tips rubik"></p>
       </div>
     </div>
     <!-- Footer -->
     <footer class="page-footer font-small blue">
-      <!-- Copyright -->
-      <div class="footer-copyright text-center py-3">
-        Demo for the NVIDIA app is
-        <a href="https://www.youtube.com/watch?v=NZBN9jRJ-FE">here</a>,
-        functinality is quite similar.
-      </div>
-      <!-- Copyright -->
-    </footer>
 
     <!-- Modal -->
     <div class="modal fade" id="GuideModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Guide</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <h1 style="text-align: center; font-size: 23px; color:#8164b4"><strong>사용 설명서</strong></h1>
+            <p style="font-weight: bold;"><br />Magic Sketch는 캔버스에서 그림을 그린 이미지를 <a href="https://nvlabs.github.io/SPADE/" target="_blank">GauGAN</a>을 이용하여 매우 사실적으로 보여주는 디자인 도구입니다.</p>
+            <br/>
+            <p> <span style="font-size: 18px; font-weight: bold; color:#8164b4">그림 그리기</span>
+            <br/>1. 브러쉬 버튼 누르고, 브러쉬 크기 선택하고, 원하는 물체 클릭하면,<br />2. 그림 그릴 준비 끝!<br />3. 캔버스 위에서 마우스로 그림을 그려보세요.</p>
+            <p> <span style="font-size: 18px; font-weight: bold; color:#8164b4">이미지로 전환하기</span>
+            <br/>그림을 다 그렸나요? 그럼 가운데 토끼를 눌러보세요!<br />오른쪽 캔버스에 이미지가 뜬답니다.</p>
+            <p> <span style="font-size: 18px; font-weight: bold; color:#8164b4">버튼 설명서</span>
+            <br/><strong>캔버스 상단</strong> | (왼쪽부터 순서대로) 브러쉬 크기, 펜 / 지우개 / 채우기, 뒤로가기 / 되돌리기 / 캔버스 초기화, 다운로드
+            <br/><strong>캔버스 하단</strong> | 브러쉬 색상. 각 색상에 해당하는 물체가 사실적으로 나타납니다.
+            <br/><strong>매직스타트(변환)</strong> | 캔버스(좌측) 이미지를 사실적으로 변환합니다. 결과는 우측에 나타납니다.
+            <br/><strong>Guide</strong> | Magic Sketch의 사용 설명서를 보여줍니다.
+            <br/><strong>Contact</strong> | 본 프로젝트를 진행한 팀원들의 정보를 보여줍니다.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
+    <div class="modal fade" id="ContactModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Contact</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body" style="font-weight: bold;">
+            <p style="font-size: 23px;">안녕하세요. <span style="color:#8164b4">EmotionKim</span>입니다.</p>
+            <p><span style="color:#8164b4;">정지원</span><br/>+ poiu8944@gmail.com<br/>+ 충남대학교 컴퓨터공학과 201502119 </p>
+            <p><span style="color:#8164b4;">김수경</span><br/>+ sukyungkim99@gmail.com<br/>+ 충남대학교 컴퓨터공학과 201802067</p>
+            <p><span style="color:#8164b4;">서보윤</span><br/>+ boyoon54@gmail.com<br/>+ 충남대학교 컴퓨터공학과 201802105</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Bootstrap core JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
