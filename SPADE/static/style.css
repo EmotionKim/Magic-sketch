@@ -85,3 +85,7 @@ input {
   background: transparent;
   height: 40px;
 }
+
+#uploadimage {
+  cursor: pointer;
+}
