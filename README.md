@@ -1,0 +1,2 @@
+- GauGAN
+- NVIDIA/SPADE
